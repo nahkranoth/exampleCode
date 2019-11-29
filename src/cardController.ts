@@ -1,27 +1,33 @@
 import Card from "./card"
-import {CardStack} from "./cardStack";
 import {Vector2} from "./mathUtils";
 
 export class CardController{
-    private cardOffset:Vector2 = {x:0, y:-1};
+    private cardOffset:Vector2 = new Vector2(0, -1);
+    private firstStackPosition:Vector2 = new Vector2(120, 220);
+    private secondStackPosition:Vector2 = new Vector2(320, 220);
 
-    private firstCardStack:CardStack;
-    private secondCardStack:CardStack;
-
+    public stack:Array<Card> = [];
     public app:PIXI.Application;
 
     constructor(app){
         this.app = app;
         // this.xCenter = this.app.renderer.width / 2;
         // this.yCenter = this.app.renderer.height / 2;
-        this.firstCardStack = new CardStack(120, 220);
-        this.secondCardStack = new CardStack(320, 220);
-    }
 
-    public createCards(amount, image){
+    }
+    //TODO: image array for random graphics
+    public createAllCards(amount, image){
         for(var i=0;i<amount;i++){
             const card = this.createCard(i, image);
-            this.firstCardStack.Assign(card);
+            card.setTransform(this.firstStackPosition);
+            this.stack.push(card);
+        }
+    }
+
+    public assignCardsToTimeline(timeline){
+        for(var i=this.stack.length-1;i>=0;i--) {
+            const card = this.stack[i];
+            timeline.add(card.getTween(), "-=1");
         }
     }
 

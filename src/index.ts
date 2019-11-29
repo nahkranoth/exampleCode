@@ -1,10 +1,12 @@
 import * as PIXI from "pixi.js";
 import * as path from 'path'
-import {TweenMax} from 'gsap'
+import {TimelineLite, TweenMax} from 'gsap'
 import {CardController} from "./cardController";
 
 class App {
     private app: PIXI.Application;
+    private timeLine;
+
     constructor() {
         this.app = new PIXI.Application({ width: 640, height: 360, antialias: true });
         document.addEventListener("DOMContentLoaded", () => this.afterInit(), false);
@@ -21,8 +23,15 @@ class App {
 
     private afterPreload(loader, resources) {
         this.app.stage.sortableChildren = true;
+
+        this.timeLine = new TimelineLite();
+        this.timeLine.pause();
+
         const cardController = new CardController(this.app);
-        cardController.createCards(144, resources.card.texture);
+        cardController.createAllCards(144, resources.card.texture);
+        cardController.assignCardsToTimeline(this.timeLine);
+
+        this.timeLine.play();
     }
 
 

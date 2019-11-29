@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {TweenMax} from "gsap";
+import {TimelineLite, TweenMax} from "gsap";
 import {Vector2} from "./mathUtils";
 
 export default class Card{
@@ -14,11 +14,23 @@ export default class Card{
         this.cardSprite.anchor.y = 0.5;
         this.cardSprite.zIndex = index;
         this.offsetPosition = offset;
-        // TweenMax.to(card, 1, {x:400});
     }
 
     public setTransform(position:Vector2){
         this.cardSprite.x = position.x + this.offsetPosition.x;
         this.cardSprite.y = position.y + this.offsetPosition.y;
+    }
+
+    private flipIndex(){
+        this.cardSprite.zIndex *= -1;
+    }
+
+    public getTween(){
+        var timeline = new TimelineLite();
+        timeline.add( TweenMax.to(this.cardSprite, 2, {x:300}));
+        timeline.call( () => { this.flipIndex() });
+        timeline.add( TweenMax.to(this.cardSprite, 2, {x:400}));
+
+        return timeline;
     }
 }
