@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import * as path from 'path'
-import {TimelineLite, TweenMax} from 'gsap'
-import {CardController} from "./cardController";
+import {TimelineLite} from 'gsap'
+import CardController from "./cardController";
+import ImageText from "./ImageText";
 
 class App {
     private app: PIXI.Application;
@@ -14,7 +14,6 @@ class App {
 
     private afterInit(){
         document.body.appendChild(this.app.view);
-
         //Image preload phase
         var loader = new PIXI.Loader();
         loader.add("card",'img/playcard.png');
@@ -23,7 +22,11 @@ class App {
 
     private afterPreload(loader, resources) {
         this.app.stage.sortableChildren = true;
+        // this.createCards(resources);
+        this.createImageText(resources);
+    }
 
+    private createCards(resources){
         this.timeLine = new TimelineLite();
         this.timeLine.pause();
 
@@ -34,6 +37,12 @@ class App {
         this.timeLine.play();
     }
 
+    private createImageText(resources){
+        const style = new PIXI.TextStyle({fill:"white", fontSize:44});
+        const txt = new ImageText(resources, ["test","[card]", "test.", "[card]"], style, 200, 200);
+        const container = txt.getContainer();
+        this.app.stage.addChild(container);
+    }
 
     // private createParticles(){
     //     const container = new PIXI.ParticleContainer(10);

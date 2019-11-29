@@ -1,7 +1,15 @@
 import Card from "./card"
 import {Vector2} from "./mathUtils";
 
-export class CardController{
+/*TODO:
+
+    Cleanup zIndex flip
+    Make animation nicer
+    Dress stage
+
+*/
+
+export default class CardController{
     private cardOffset:Vector2 = new Vector2(0, -1);
     private firstStackPosition:Vector2 = new Vector2(120, 220);
     private secondStackPosition:Vector2 = new Vector2(520, 220);
