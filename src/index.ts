@@ -1,10 +1,10 @@
 import * as PIXI from "pixi.js";
 import {TimelineLite} from 'gsap'
 import CardController from "./cardController";
-import ImageText from "./ImageText";
 import ParticleFlame from "./particleFlame";
 import FPS from "./fps";
 import {Vector2} from "./utils";
+import ImageTextController from "./imageTextController";
 
 class App {
     private app: PIXI.Application;
@@ -12,8 +12,6 @@ class App {
     private stageCenter:Vector2;
 
     constructor() {
-
-
         document.addEventListener("DOMContentLoaded", () => this.afterInit(), false);
     }
 
@@ -44,7 +42,7 @@ class App {
         this.timeLine = new TimelineLite();
         this.timeLine.pause();
 
-        const cardController = new CardController(this.app);
+        const cardController = new CardController(this.app, this.stageCenter);
         cardController.createAllCards(144, resources.card.texture);
         cardController.assignCardsToTimeline(this.timeLine);
 
@@ -52,14 +50,11 @@ class App {
     }
 
     private createImageText(resources){
-        const style = new PIXI.TextStyle({fill:"white", fontSize:44});
-        const txt = new ImageText(resources, ["Test","[smileyBite]", "Test", "[smileyPuff]"], style, this.stageCenter.x, this.stageCenter.y);
-        const container = txt.getContainer();
-        this.app.stage.addChild(container);
+        new ImageTextController(this.app.stage, resources, this.stageCenter);
     }
 
     private createParticles(resources){
-        new ParticleFlame(this.app, resources);
+        new ParticleFlame(this.app, resources, this.stageCenter);
     }
 
 

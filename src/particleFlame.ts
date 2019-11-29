@@ -6,8 +6,10 @@ export default class ParticleFlame{
     private stack:Array<Particle> = [];
     private amount:number = 10;
     private time:number = 0;
+    private position:Vector2;
 
-    constructor(app, resources){
+    constructor(app, resources, position){
+        this.position = position;
         const container = new PIXI.ParticleContainer(this.amount, {
             vertices: true,
             position: true,
@@ -23,7 +25,7 @@ export default class ParticleFlame{
     
     private spawnParticles(container, texture){
         const size = 46;
-        const position = new Vector2(300, 300);
+        const position = this.position;
         for (let i = 0; i < this.amount; ++i)
         {
             let sprite = PIXI.Sprite.from(texture);

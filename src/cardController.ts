@@ -3,7 +3,6 @@ import {Vector2} from "./utils";
 
 /*TODO:
 
-    FPS COUNTER!
     Cleanup zIndex flip
     Make animation nicer
     Dress stage
@@ -12,14 +11,17 @@ import {Vector2} from "./utils";
 
 export default class CardController{
     private cardOffset:Vector2 = new Vector2(0, -1);
-    private firstStackPosition:Vector2 = new Vector2(120, 220);
-    private secondStackPosition:Vector2 = new Vector2(520, 220);
+    private firstStackPosition:Vector2;
+    private secondStackPosition:Vector2;
 
     public stack:Array<Card> = [];
     public app:PIXI.Application;
 
-    constructor(app){
+
+    constructor(app, stageCenter){
         this.app = app;
+        this.firstStackPosition = new Vector2(stageCenter.x-200, stageCenter.y-120);
+        this.secondStackPosition = new Vector2(stageCenter.x+200, stageCenter.y-120);
 
     }
     //TODO: image array for random graphics

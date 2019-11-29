@@ -26,12 +26,16 @@ export default class ImageText{
         this.centerContainer();
     }
 
-    private centerContainer(){
-        this.container.x = -(this.width/2)+this.xOffset; //center text
+    public destroy(){
+        this.container.destroy({children:true});
     }
 
     public getContainer(){
         return this.container;
+    }
+
+    private centerContainer(){
+        this.container.x = -(this.width/2)+this.xOffset; //center text
     }
 
     private processStack(){
