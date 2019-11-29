@@ -34,7 +34,7 @@ export default class ImageTextController{
 
         let t = new TimelineMax({repeat:-1});//repeat indefinitely
         t.call(() => { this.createRandomImageText(); });
-        t.call(()=>{ this.currentImageText.destroy(); },[], "+=1");
+        t.call(()=>{ this.currentImageText.destroy(); },[], "+=2");
         t.play();
     }
 
