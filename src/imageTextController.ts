@@ -17,11 +17,11 @@ export default class ImageTextController{
         this.resources = resources;
         this.position = position;
 
-        this.styles.push(new PIXI.TextStyle({fill:"white", fontSize:44}));
-        this.styles.push(new PIXI.TextStyle({fill:"green", fontSize:22}));
-        this.styles.push(new PIXI.TextStyle({fill:"yellow", fontSize:11}));
-        this.styles.push(new PIXI.TextStyle({fill:"purple", fontSize:66}));
-        this.styles.push(new PIXI.TextStyle({fill:"pink", fontSize:77}));
+        this.styles.push(new PIXI.TextStyle({fill:"white", fontSize:44, fontFamily: "Verdana"}));
+        this.styles.push(new PIXI.TextStyle({fill:"green", fontSize:22, fontFamily: "Verdana"}));
+        this.styles.push(new PIXI.TextStyle({fill:"yellow", fontSize:11, fontFamily: "Verdana"}));
+        this.styles.push(new PIXI.TextStyle({fill:"purple", fontSize:66, fontFamily: "Verdana"}));
+        this.styles.push(new PIXI.TextStyle({fill:"pink", fontSize:77, fontFamily: "Verdana"}));
 
         //For image put the resource name of the image in brackets
         this.compositions.push(["[smileyBite]" ,"SmileySmile"   ,"[smileySmile"]);
