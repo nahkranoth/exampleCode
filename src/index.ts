@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import {TimelineLite} from 'gsap'
 import CardController from "./cardController";
 import ImageText from "./ImageText";
+import ParticleFlame from "./particleFlame";
 
 class App {
     private app: PIXI.Application;
@@ -17,13 +18,15 @@ class App {
         //Image preload phase
         var loader = new PIXI.Loader();
         loader.add("card",'img/playcard.png');
+        loader.add("flame",'img/flam.png');
         loader.load((loader, resources) => {this.afterPreload(loader, resources)});
     }
 
     private afterPreload(loader, resources) {
         this.app.stage.sortableChildren = true;
         // this.createCards(resources);
-        this.createImageText(resources);
+        // this.createImageText(resources);
+        this.createParticles(resources);
     }
 
     private createCards(resources){
@@ -39,19 +42,14 @@ class App {
 
     private createImageText(resources){
         const style = new PIXI.TextStyle({fill:"white", fontSize:44});
-        const txt = new ImageText(resources, ["test","[card]", "test.", "[card]"], style, 200, 200);
+        const txt = new ImageText(resources, ["Test","[card]", "Test", "[card]"], style, 200, 200);
         const container = txt.getContainer();
         this.app.stage.addChild(container);
     }
 
-    // private createParticles(){
-    //     const container = new PIXI.ParticleContainer(10);
-    //     for (let i = 0; i < 100; ++i)
-    //     {
-    //         let sprite = PIXI.Sprite.from("myImage.png");
-    //         container.addChild(sprite);
-    //     }
-    // }
+    private createParticles(resources){
+        const particleFlame = new ParticleFlame(this.app, resources);
+    }
 
 
 }

@@ -18,7 +18,7 @@ export default class ImageText{
         this.position = new Vector2(x,y);
         this.lastX = x;
         this.container = new PIXI.Container();
-        this.height = style.fontSize;
+        this.height = style.fontSize/1.333; //transform from points to pixels
         this.xOffset *= style.fontSize/100;
         this.processContentToStack(content);
         this.processStack();
@@ -50,7 +50,7 @@ export default class ImageText{
         sprite.height = this.height;
         sprite.width = this.height * ratio;
         sprite.x = this.lastX;
-        sprite.y = this.position.y;
+        sprite.y = this.position.y + this.height/4;//divided by 4 to compensate for text texture margin
         return sprite;
     }
 
