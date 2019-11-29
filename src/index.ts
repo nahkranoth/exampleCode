@@ -10,15 +10,16 @@ class App {
     private app: PIXI.Application;
     private timeLine;
     private stageCenter:Vector2;
+    private body;
 
     constructor() {
         document.addEventListener("DOMContentLoaded", () => this.afterInit(), false);
     }
 
     private afterInit(){
-        let body = document.body;
-        this.stageCenter = new Vector2(body.scrollWidth/2, body.scrollHeight/2);
-        this.app = new PIXI.Application({ width: body.scrollWidth, height: body.scrollHeight, antialias: true, transparent:true });
+        this.body = document.body;
+
+        this.app = new PIXI.Application({ width: this.body.scrollWidth, height: this.body.scrollHeight, antialias: true, transparent:true });
         document.body.appendChild(this.app.view);
 
         var loader = new PIXI.Loader();
@@ -34,6 +35,7 @@ class App {
 
     private afterPreload(loader, resources) {
         this.app.stage.sortableChildren = true;
+        this.stageCenter = new Vector2(this.body.scrollWidth/2, this.body.scrollHeight/2);
         this.createCards(resources);
         this.createImageText(resources);
         this.createParticles(resources);
