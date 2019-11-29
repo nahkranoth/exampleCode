@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Vector2} from "./mathUtils";
+import {Vector2} from "./Utils";
 
 export default class ImageText{
 

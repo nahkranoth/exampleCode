@@ -1,19 +1,21 @@
 import * as PIXI from "pixi.js";
-import {Vector2} from "./mathUtils";
+import {Vector2} from "./Utils";
+import rgb2hex = PIXI.utils.rgb2hex;
 
 export default class ParticleFlame{
     private stack:Array<Particle> = [];
     private amount:number = 10;
     private time:number = 0;
-    private particleSpawnSize = 26;
+    private particleSpawnSize = 46;
+    private spawnColor = [1,1,0];
     private spawnPosition:Vector2 = new Vector2(300, 300);
     constructor(app, resources){
-
         const container = new PIXI.ParticleContainer(this.amount, {
             vertices: true,
             position: true,
             rotation: true,
-            uvs: true
+            uvs: true,
+            tint: true
         });
 
         app.stage.addChild(container);
@@ -30,11 +32,9 @@ export default class ParticleFlame{
             const particle = new Particle();
             particle.sprite = sprite;
             particle.timeOffset = Math.random()*100;
-
             particle.lifetime = 100;
             particle.speed =  new Vector2(Math.random()*1.3,(Math.random()*.5)+0.5);
             particle.rotationIntensity = Math.random()*.5+.3;
-
             this.stack.push(particle);
             container.addChild(sprite);
         }
@@ -53,6 +53,9 @@ export default class ParticleFlame{
             particle.sprite.width = particle.sprite.height = size;
             particle.sprite.anchor.x = 0.5;
             particle.sprite.anchor.y = 0.5;
+            const newGreen = this.spawnColor[1] - clampTime/particle.lifetime;
+            const newClr = [this.spawnColor[0], newGreen, this.spawnColor[2]];
+            particle.sprite.tint = PIXI.utils.rgb2hex(newClr);
             particle.sprite.angle = Math.cos(clampTime*0.1) * 180/Math.PI * particle.rotationIntensity;
         }
     }

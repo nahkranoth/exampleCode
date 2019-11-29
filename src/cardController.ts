@@ -1,8 +1,9 @@
 import Card from "./card"
-import {Vector2} from "./mathUtils";
+import {Vector2} from "./Utils";
 
 /*TODO:
 
+    FPS COUNTER!
     Cleanup zIndex flip
     Make animation nicer
     Dress stage
