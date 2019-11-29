@@ -6,7 +6,10 @@ export default class ParticleFlame{
     private stack:Array<Particle> = [];
     private amount:number = 10;
     private time:number = 0;
+    private size:number = 66;
+    private lifetime:number = 100;
     private position:Vector2;
+    private wiggleMultiply:number = 0.12;
 
     constructor(app, resources, position){
         this.position = position;
@@ -24,19 +27,18 @@ export default class ParticleFlame{
     }
     
     private spawnParticles(container, texture){
-        const size = 46;
-        const position = this.position;
         for (let i = 0; i < this.amount; ++i)
         {
             let sprite = PIXI.Sprite.from(texture);
-            sprite.width = size;
-            sprite.height = size;
+            sprite.width = this.size;
+            sprite.height = this.size;
             const particle = new Particle(sprite, {
-                lifetime:100,
-                position: position,
-                size: size,
+                lifetime:this.lifetime,
+                position: this.position,
+                size: this.size,
                 spawnColor:[1,1,0],
-                wiggle: 0.3
+                wiggle: 0.3,
+                speed:1.6
             });
             this.stack.push(particle);
             container.addChild(sprite);
@@ -49,14 +51,18 @@ export default class ParticleFlame{
             var particle = this.stack[i];
 
             const particleTime = this.time + particle.timeOffset;
-            const clampTime = particleTime % particle.lifetime;
-            const lifeTimeCycle = clampTime/particle.lifetime;
+            const clampTime = particleTime % this.lifetime;
+            const lifeTimeCycle = clampTime/this.lifetime;
 
-            particle.updatePosition(clampTime);
+            if(clampTime <= 1){
+                particle.bringToFront();
+            }
+
+            particle.updatePosition(clampTime, this.wiggleMultiply);
             particle.updateSize(lifeTimeCycle);
             particle.updateTint(lifeTimeCycle);
 
-            particle.sprite.angle = Math.cos(clampTime*0.1) * 180/Math.PI * particle.rotationIntensity;
+            particle.sprite.angle = Math.cos(clampTime*this.wiggleMultiply) * 180/Math.PI * particle.rotationIntensity;
         }
     }
 }

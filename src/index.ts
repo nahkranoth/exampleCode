@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {TimelineLite} from 'gsap'
+import {TimelineMax} from 'gsap'
 import CardController from "./cardController";
 import ParticleFlame from "./particleFlame";
 import FPS from "./fps";
@@ -20,7 +20,7 @@ class App {
         this.stageCenter = new Vector2(body.scrollWidth/2, body.scrollHeight/2);
         this.app = new PIXI.Application({ width: body.scrollWidth, height: body.scrollHeight, antialias: true, transparent:true });
         document.body.appendChild(this.app.view);
-        //Image preload phase
+
         var loader = new PIXI.Loader();
         loader.add("card",'img/playcard.png');
         loader.add("flame",'img/flam.png');
@@ -28,7 +28,8 @@ class App {
         loader.add("smileyPuff",'img/smileyPuff.png');
         loader.add("smileySmile",'img/smileySmile.png');
         loader.load((loader, resources) => {this.afterPreload(loader, resources)});
-        var fps = new FPS(this.app.stage);
+
+        new FPS(this.app.stage);
     }
 
     private afterPreload(loader, resources) {
@@ -39,13 +40,11 @@ class App {
     }
 
     private createCards(resources){
-        this.timeLine = new TimelineLite();
-        this.timeLine.pause();
-
+        this.timeLine = new TimelineMax();
+        this.timeLine.pause();//wait for all cards to be assigned before playing
         const cardController = new CardController(this.app, this.stageCenter);
-        cardController.createAllCards(144, resources.card.texture);
+        cardController.createCards(144, resources.card.texture);
         cardController.assignCardsToTimeline(this.timeLine);
-
         this.timeLine.play();
     }
 
@@ -54,9 +53,8 @@ class App {
     }
 
     private createParticles(resources){
-        new ParticleFlame(this.app, resources, this.stageCenter);
+        const particleCenter = new Vector2(this.stageCenter.x, this.stageCenter.y-80);
+        new ParticleFlame(this.app, resources, particleCenter);
     }
-
-
 }
 const a = new App();

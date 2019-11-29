@@ -20,9 +20,9 @@ export default class ImageText{
         this.lastX = x;
         this.container = new PIXI.Container();
         this.height = style.fontSize/1.333; //transform from points to pixels
-        this.xOffset *= style.fontSize/100;
-        this.processContentToStack(content);
-        this.processStack();
+        this.xOffset *= style.fontSize/100; //offset dependant on font size
+        this.contentToStack(content);
+        this.applyStack();
         this.centerContainer();
     }
 
@@ -38,7 +38,7 @@ export default class ImageText{
         this.container.x = -(this.width/2)+this.xOffset; //center text
     }
 
-    private processStack(){
+    private applyStack(){
         for(var i=0;i<this.stack.length;i++){
             let item = this.stack[i];
             const displayItem = item.isImage ? this.addImage(item.image) : this.addText(item.text);
@@ -62,11 +62,11 @@ export default class ImageText{
         sprite.height = this.height;
         sprite.width = this.height * ratio;
         sprite.x = this.lastX;
-        sprite.y = this.position.y + this.height/4;//divided by 4 to compensate for text texture margin
+        sprite.y = this.position.y + this.height/4;//divided by 4 to compensate for text/texture margin
         return sprite;
     }
 
-    private processContentToStack(content){
+    private contentToStack(content){
         for(var i=0;i<content.length;i++){
             let item = content[i];
             if(item[0] == "["){
@@ -81,7 +81,7 @@ export default class ImageText{
 
 class ContentItem{
     public isImage:boolean;
-    public image;
+    public image:PIXI.Sprite;
     public text:string;
     constructor(isImage = false, text = "", image = undefined){
         this.isImage = isImage;

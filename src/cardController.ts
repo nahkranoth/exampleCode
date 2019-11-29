@@ -1,15 +1,8 @@
 import Card from "./card"
 import {Vector2} from "./utils";
 
-/*TODO:
-
-    Cleanup zIndex flip
-    Make animation nicer
-    Dress stage
-
-*/
-
 export default class CardController{
+    private stageCenter:Vector2;
     private cardOffset:Vector2 = new Vector2(0, -1);
     private firstStackPosition:Vector2;
     private secondStackPosition:Vector2;
@@ -17,17 +10,16 @@ export default class CardController{
     public stack:Array<Card> = [];
     public app:PIXI.Application;
 
-
     constructor(app, stageCenter){
         this.app = app;
+        this.stageCenter = stageCenter;
         this.firstStackPosition = new Vector2(stageCenter.x-200, stageCenter.y-120);
         this.secondStackPosition = new Vector2(stageCenter.x+200, stageCenter.y-120);
-
     }
-    //TODO: image array for random graphics
-    public createAllCards(amount, image){
+
+    public createCards(amount, image){
         for(var i=0;i<amount;i++){
-            const card = this.createCard(i, image);
+            const card = this.createSingleCard(i, image);
             card.setTransform(this.firstStackPosition);
             this.stack.push(card);
         }
@@ -44,9 +36,9 @@ export default class CardController{
         }
     }
 
-    private createCard(index, image){
+    private createSingleCard(index, image){
         const offset = this.getOffsetPositionFromIndex(index);
-        const card = new Card(index, image, offset);
+        const card = new Card(index, image, offset, this.stageCenter);
         this.app.stage.addChild(card.cardSprite);
         return card;
     }

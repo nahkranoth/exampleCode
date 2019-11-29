@@ -22,7 +22,7 @@ export default class FPS{
             }
             this.times.push(now);
             this.fps = this.times.length;
-            this.txt.text = this.fps;
+            this.txt.text = this.fps + " FPS";
             this.loop();
         });
     }
