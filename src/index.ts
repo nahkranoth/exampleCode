@@ -4,22 +4,31 @@ import CardController from "./cardController";
 import ImageText from "./ImageText";
 import ParticleFlame from "./particleFlame";
 import FPS from "./fps";
+import {Vector2} from "./utils";
 
 class App {
     private app: PIXI.Application;
     private timeLine;
+    private stageCenter:Vector2;
 
     constructor() {
-        this.app = new PIXI.Application({ width: 640, height: 360, antialias: true });
+
+
         document.addEventListener("DOMContentLoaded", () => this.afterInit(), false);
     }
 
     private afterInit(){
+        let body = document.body;
+        this.stageCenter = new Vector2(body.scrollWidth/2, body.scrollHeight/2);
+        this.app = new PIXI.Application({ width: body.scrollWidth, height: body.scrollHeight, antialias: true, transparent:true });
         document.body.appendChild(this.app.view);
         //Image preload phase
         var loader = new PIXI.Loader();
         loader.add("card",'img/playcard.png');
         loader.add("flame",'img/flam.png');
+        loader.add("smileyBite",'img/smileyBite.png');
+        loader.add("smileyPuff",'img/smileyPuff.png');
+        loader.add("smileySmile",'img/smileySmile.png');
         loader.load((loader, resources) => {this.afterPreload(loader, resources)});
         var fps = new FPS(this.app.stage);
     }
@@ -44,7 +53,7 @@ class App {
 
     private createImageText(resources){
         const style = new PIXI.TextStyle({fill:"white", fontSize:44});
-        const txt = new ImageText(resources, ["Test","[card]", "Test", "[card]"], style, 200, 200);
+        const txt = new ImageText(resources, ["Test","[smileyBite]", "Test", "[smileyPuff]"], style, this.stageCenter.x, this.stageCenter.y);
         const container = txt.getContainer();
         this.app.stage.addChild(container);
     }

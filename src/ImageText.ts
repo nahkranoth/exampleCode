@@ -11,6 +11,7 @@ export default class ImageText{
     private height:number;
     private lastX:number;
     private xOffset:number = 20;
+    private width:number = 0;
 
     constructor(resources, content, style, x, y){
         this.resources = resources;
@@ -22,6 +23,11 @@ export default class ImageText{
         this.xOffset *= style.fontSize/100;
         this.processContentToStack(content);
         this.processStack();
+        this.centerContainer();
+    }
+
+    private centerContainer(){
+        this.container.x = -(this.width/2)+this.xOffset; //center text
     }
 
     public getContainer(){
@@ -33,7 +39,9 @@ export default class ImageText{
             let item = this.stack[i];
             const displayItem = item.isImage ? this.addImage(item.image) : this.addText(item.text);
             this.container.addChild(displayItem);
-            this.lastX = displayItem.x + displayItem.width + this.xOffset;
+            const itemWidth = displayItem.width + this.xOffset;
+            this.width += itemWidth;
+            this.lastX = displayItem.x + itemWidth;
         }
     }
 
