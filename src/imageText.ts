@@ -59,10 +59,11 @@ export default class ImageText{
     private addImage(img){
         const sprite = PIXI.Sprite.from(img);
         const ratio = sprite.width/sprite.height;
-        sprite.height = this.height;
-        sprite.width = this.height * ratio;
+        sprite.height = this.height * 1.1;
+        sprite.width = this.height * 1.1 * ratio;
         sprite.x = this.lastX;
-        sprite.y = this.position.y + this.height/4;//divided by 4 to compensate for text/texture margin
+        sprite.anchor.y = 0.5;
+        sprite.y = this.position.y + this.height*.95;//divided by 2 to compensate for text/texture margin
         return sprite;
     }
 
