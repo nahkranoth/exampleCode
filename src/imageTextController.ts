@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import ImageText from "./ImageText";
+import ImageText from "./imageText";
 import {Vector2} from "./utils";
 import {TimelineMax} from "gsap";
 
