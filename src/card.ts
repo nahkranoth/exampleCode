@@ -25,12 +25,11 @@ export default class Card{
         this.cardSprite.zIndex *= -1;
     }
 
-    public getTween(){
+    public getTween(goalPosition){
         var timeline = new TimelineLite();
-        timeline.add( TweenMax.to(this.cardSprite, 2, {x:300}));
+        timeline.add( TweenMax.to(this.cardSprite, 1, {x:goalPosition.x/2, y:goalPosition.y/2}));
         timeline.call( () => { this.flipIndex() });
-        timeline.add( TweenMax.to(this.cardSprite, 2, {x:400}));
-
+        timeline.add( TweenMax.to(this.cardSprite, 1, {x:goalPosition.x, y:goalPosition.y}));
         return timeline;
     }
 }

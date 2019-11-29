@@ -6,4 +6,11 @@ export class Vector2{
         this.x = x;
         this.y = y;
     }
+
+    static Add(a, b){
+        let result:Vector2 = new Vector2(0,0);
+        result.x = a.x + b.x;
+        result.y = a.y + b.y;
+        return result;
+    }
 }

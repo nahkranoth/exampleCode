@@ -4,15 +4,13 @@ import {Vector2} from "./mathUtils";
 export class CardController{
     private cardOffset:Vector2 = new Vector2(0, -1);
     private firstStackPosition:Vector2 = new Vector2(120, 220);
-    private secondStackPosition:Vector2 = new Vector2(320, 220);
+    private secondStackPosition:Vector2 = new Vector2(520, 220);
 
     public stack:Array<Card> = [];
     public app:PIXI.Application;
 
     constructor(app){
         this.app = app;
-        // this.xCenter = this.app.renderer.width / 2;
-        // this.yCenter = this.app.renderer.height / 2;
 
     }
     //TODO: image array for random graphics
@@ -27,7 +25,11 @@ export class CardController{
     public assignCardsToTimeline(timeline){
         for(var i=this.stack.length-1;i>=0;i--) {
             const card = this.stack[i];
-            timeline.add(card.getTween(), "-=1");
+            const x = (i-this.stack.length)*this.cardOffset.x;
+            const y = (i-this.stack.length)*-this.cardOffset.y;
+            const offset = new Vector2(x, y);
+            const goalPosition = Vector2.Add(this.secondStackPosition, offset);
+            timeline.add(card.getTween(goalPosition), "-=1");
         }
     }
 
