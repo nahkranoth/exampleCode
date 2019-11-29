@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Vector2} from "./Utils";
+import {Vector2} from "./utils";
 
 export default class ImageText{
 
@@ -38,7 +38,7 @@ export default class ImageText{
     }
 
     private addText(txt){
-        const result = new PIXI.Text(txt, this.style);
+        let result = new PIXI.Text(txt, this.style);
         result.x = this.lastX;
         result.y = this.position.y;
         return result;

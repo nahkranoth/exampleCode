@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Vector2} from "./Utils";
+import {Vector2} from "./utils";
 
 export default class Particle{
     public sprite:PIXI.Sprite;

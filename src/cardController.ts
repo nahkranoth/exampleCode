@@ -1,5 +1,5 @@
 import Card from "./card"
-import {Vector2} from "./Utils";
+import {Vector2} from "./utils";
 
 /*TODO:
 

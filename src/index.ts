@@ -3,6 +3,7 @@ import {TimelineLite} from 'gsap'
 import CardController from "./cardController";
 import ImageText from "./ImageText";
 import ParticleFlame from "./particleFlame";
+import FPS from "./fps";
 
 class App {
     private app: PIXI.Application;
@@ -20,12 +21,13 @@ class App {
         loader.add("card",'img/playcard.png');
         loader.add("flame",'img/flam.png');
         loader.load((loader, resources) => {this.afterPreload(loader, resources)});
+        var fps = new FPS(this.app.stage);
     }
 
     private afterPreload(loader, resources) {
         this.app.stage.sortableChildren = true;
-        // this.createCards(resources);
-        // this.createImageText(resources);
+        this.createCards(resources);
+        this.createImageText(resources);
         this.createParticles(resources);
     }
 
@@ -48,7 +50,7 @@ class App {
     }
 
     private createParticles(resources){
-        const particleFlame = new ParticleFlame(this.app, resources);
+        new ParticleFlame(this.app, resources);
     }
 
 

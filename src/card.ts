@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import {TimelineLite, TweenMax} from "gsap";
-import {Vector2} from "./Utils";
+import {Vector2} from "./utils";
 
 export default class Card{
     public cardSprite:PIXI.Sprite;
